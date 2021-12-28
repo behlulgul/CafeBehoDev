@@ -27,9 +27,15 @@ namespace Mango.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<IProductService, ProductService>();
+            services.AddHttpClient<ICartService, CartService>();
+            services.AddHttpClient<ICouponService, CouponService>();
             SD.ProductAPIBase = Configuration["ServiceUrls:ProductAPI"];
+            SD.ShoppingCartAPIBase = Configuration["ServiceUrls:ShoppingCartAPI"];
+            SD.CouponAPIBase = Configuration["ServiceUrls:CouponAPI"];
 
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICartService, CartService>();
+            services.AddScoped<ICouponService, CouponService>();
             services.AddControllersWithViews();
 
             services.AddAuthentication(options =>
@@ -53,6 +59,7 @@ namespace Mango.Web
                     options.SaveTokens = true;
 
                 });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

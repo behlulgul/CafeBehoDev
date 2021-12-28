@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mango.Web.Models
+namespace Mango.Services.ShoppingCartAPI.Models
 {
-    public class ProductDto
+    public class Product
     {
-        public ProductDto()
-        {
-            Count = 1;
-        }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ProductId { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Range(1, 1000)]
         public double Price { get; set; }
         public string Description { get; set; }
-        public string ImageUrl { get; set; }
         public string CategoryName { get; set; }
-        [Range(1, 100)]
-        public int Count { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace Mango.Web.Services
                         Encoding.UTF8,"application/json");
                 }
 
-                if(!string.IsNullOrEmpty(apiRequest.AccessToken))
+                if (!string.IsNullOrEmpty(apiRequest.AccessToken))
                 {
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiRequest.AccessToken);
                 }

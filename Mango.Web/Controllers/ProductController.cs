@@ -37,19 +37,24 @@ namespace Mango.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProductCreate(ProductDto model)
-        {
-            if (ModelState.IsValid)
-            {
-                var accessToken = await HttpContext.GetTokenAsync("access_token");
-                var response = await _productService.CreateProductAsync<ResponseDto>(model, accessToken);
-                if (response != null && response.IsSuccess)
-                {
-                    return RedirectToAction(nameof(ProductIndex));
-                }
-            }
-            return View(model);
-        }
+        //        public async Task<IActionResult> ProductCreate(ProductDto model)
+        //        {
+        //            if (ModelState.IsValid)
+        //            {
+        //<<<<<<< Updated upstream
+        //                var accessToken = await HttpContext.GetTokenAsync("access_token");
+        //                var response = await _productService.CreateProductAsync<ResponseDto>(model, accessToken);
+        //=======
+        //                var response = await _productService.CreateProductAsync<ResponseDto>(model);
+
+        //>>>>>>> Stashed changes
+        //                if (response != null && response.IsSuccess)
+        //                {
+        //                    return RedirectToAction(nameof(ProductIndex));
+        //                }
+        //            }
+        //            return View(model);
+        //        }
         public async Task<IActionResult> ProductEdit(int productId)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -76,7 +81,8 @@ namespace Mango.Web.Controllers
             }
             return View(model);
         }
-        [Authorize(Roles ="Admin")]
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ProductDelete(int productId)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -89,6 +95,7 @@ namespace Mango.Web.Controllers
             return NotFound();
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProductDelete(ProductDto model)
         {

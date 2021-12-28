@@ -6,6 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Views\Cart\CartIndex.cshtml" />
+    <None Include="Views\Cart\Checkout.cshtml" />
+    <None Include="Views\Cart\Confirmation.cshtml" />
+    <None Include="Views\Home\Details.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Product\ProductCreate.cshtml" />
+    <None Include="Views\Product\ProductDelete.cshtml" />
+    <None Include="Views\Product\ProductEdit.cshtml" />
+    <None Include="Views\Product\ProductIndex.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_LoginPartial.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.0-preview.3.21201.13" />
