@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mango.Services.ProductAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210501212024_SeedProducts")]
-    partial class SeedProducts
+    [Migration("20211230115349_AddProductMig")]
+    partial class AddProductMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,7 +53,7 @@ namespace Mango.Services.ProductAPI.Migrations
                             ProductId = 1,
                             CategoryName = "Appetizer",
                             Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                            ImageUrl = "https://dotnetmastery.blob.core.windows.net/mango/14.jpg",
+                            ImageUrl = "https://behodotnet.blob.core.windows.net/cafebeho/14.jpg",
                             Name = "Samosa",
                             Price = 15.0
                         },
@@ -62,7 +62,7 @@ namespace Mango.Services.ProductAPI.Migrations
                             ProductId = 2,
                             CategoryName = "Appetizer",
                             Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                            ImageUrl = "https://dotnetmastery.blob.core.windows.net/mango/12.jpg",
+                            ImageUrl = "https://behodotnet.blob.core.windows.net/cafebeho/12.jpg",
                             Name = "Paneer Tikka",
                             Price = 13.99
                         },
@@ -71,7 +71,7 @@ namespace Mango.Services.ProductAPI.Migrations
                             ProductId = 3,
                             CategoryName = "Dessert",
                             Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                            ImageUrl = "https://dotnetmastery.blob.core.windows.net/mango/11.jpg",
+                            ImageUrl = "https://behodotnet.blob.core.windows.net/cafebeho/11.jpg",
                             Name = "Sweet Pie",
                             Price = 10.99
                         },
@@ -80,7 +80,7 @@ namespace Mango.Services.ProductAPI.Migrations
                             ProductId = 4,
                             CategoryName = "Entree",
                             Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                            ImageUrl = "https://dotnetmastery.blob.core.windows.net/mango/13.jpg",
+                            ImageUrl = "https://behodotnet.blob.core.windows.net/cafebeho/13.jpg",
                             Name = "Pav Bhaji",
                             Price = 15.0
                         });
