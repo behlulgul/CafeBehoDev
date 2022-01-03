@@ -1,8 +1,6 @@
-﻿//using Mango.MessageBus;
-//using Mango.Services.ShoppingCartAPI.Messages;
+﻿using CafeBehoMessageBus;
 using Mango.Services.ShoppingCartAPI.Messages;
 using Mango.Services.ShoppingCartAPI.Models.Dto;
-//using Mango.Services.ShoppingCartAPI.RabbitMQSender;
 using Mango.Services.ShoppingCartAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,17 +16,14 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
     {
         private readonly ICartRepository _cartRepository;
         private readonly ICouponRepository _couponRepository;
-        //private readonly IMessageBus _messageBus;
+        private readonly IMessageBus _messageBus;
         protected ResponseDto _response;
-        //private readonly IRabbitMQCartMessageSender _rabbitMQCartMessageSender;
 
-        public CartAPIController(ICartRepository cartRepository, /*IMessageBus messageBus,*/
-            ICouponRepository couponRepository/*, IRabbitMQCartMessageSender rabbitMQCartMessageSender*/)
+        public CartAPIController(ICartRepository cartRepository, IMessageBus messageBus, ICouponRepository couponRepository)
         {
             _cartRepository = cartRepository;
             _couponRepository = couponRepository;
-            //_rabbitMQCartMessageSender = rabbitMQCartMessageSender;
-            //_messageBus = messageBus;
+            _messageBus = messageBus;
             this._response = new ResponseDto();
         }
 
@@ -154,10 +149,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 
                 checkoutHeader.CartDetails = cartDto.CartDetails;
                 //logic to add message to process order.
-                //await _messageBus.PublishMessage(checkoutHeader, "checkoutqueue");
-
-                ////rabbitMQ
-                //_rabbitMQCartMessageSender.SendMessage(checkoutHeader, "checkoutqueue");
+                await _messageBus.PublishMessage(checkoutHeader, "checkoutqueue");
                 await _cartRepository.ClearCart(checkoutHeader.UserId);
             }
             catch (Exception ex)

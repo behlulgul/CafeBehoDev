@@ -1,7 +1,9 @@
 using AutoMapper;
 using CafeBehoMessageBus;
-using Mango.Services.ShoppingCartAPI.DbContexts;
-using Mango.Services.ShoppingCartAPI.Repository;
+using Mango.Services.OrderAPI.DbContexts;
+using Mango.Services.OrderAPI.Extension;
+using Mango.Services.OrderAPI.Messaging;
+using Mango.Services.OrderAPI.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -18,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mango.Services.ShoppingCartAPI
+namespace Mango.Services.OrderAPI
 {
     public class Startup
     {
@@ -37,15 +39,18 @@ namespace Mango.Services.ShoppingCartAPI
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
-            IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
-            services.AddSingleton(mapper);
+            //IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+            //services.AddSingleton(mapper);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddScoped<ICartRepository, CartRepository>();
-            services.AddScoped<ICouponRepository, CouponRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+
+            var optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddSingleton(new OrderRepository(optionBuilder.Options));
+            services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
             services.AddSingleton<IMessageBus, AzureServiceBusMessageBus>();
             services.AddControllers();
-            services.AddHttpClient<ICouponRepository, CouponRepository>(u => u.BaseAddress =
-              new Uri(Configuration["ServiceUrls:CouponAPI"]));
+
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
@@ -69,8 +74,7 @@ namespace Mango.Services.ShoppingCartAPI
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mango.Services.ShoppingCartAPI", Version = "v1" });
-                c.EnableAnnotations();
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mango.Services.CouponAPI", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"Enter 'Bearer' [space] and your token",
@@ -101,6 +105,7 @@ namespace Mango.Services.ShoppingCartAPI
 
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -108,7 +113,7 @@ namespace Mango.Services.ShoppingCartAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mango.Services.ShoppingCartAPI v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mango.Services.OrderAPI v1"));
             }
 
             app.UseHttpsRedirection();
@@ -121,6 +126,8 @@ namespace Mango.Services.ShoppingCartAPI
             {
                 endpoints.MapControllers();
             });
+
+            app.UseAzureServiceBusConsumer();
         }
     }
 }

@@ -70,6 +70,7 @@ namespace Mango.Web.Controllers
             return View();
         }
 
+
         public async Task<IActionResult> Checkout()
         {
             return View(await LoadCartDtoBasedOnLoggedInUser());
@@ -99,7 +100,6 @@ namespace Mango.Web.Controllers
         {
             return View();
         }
-
         private async Task<CartDto> LoadCartDtoBasedOnLoggedInUser()
         {
             var userId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value;
