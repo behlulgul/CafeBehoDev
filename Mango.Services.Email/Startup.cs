@@ -2,6 +2,7 @@ using Mango.Services.Email.DbContexts;
 using Mango.Services.Email.Extension;
 using Mango.Services.Email.Messaging;
 using Mango.Services.Email.Repository;
+using Mango.Services.PaymentAPI.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,7 +39,7 @@ namespace Mango.Services.Email
             //IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
             //services.AddSingleton(mapper);
             services.AddScoped<IEmailRepository, EmailRepository>();
-
+            services.AddHostedService<RabbitMQPaymentConsumer>();
             var optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             services.AddSingleton(new EmailRepository(optionBuilder.Options));

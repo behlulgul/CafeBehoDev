@@ -58,7 +58,7 @@ namespace Mango.Services.Email.Messaging
             return Task.CompletedTask;
         }
 
-        private async Task OnCheckOutMessageReceived(ProcessMessageEventArgs args)
+        private async Task OnOrderPaymentUpdateReceived(ProcessMessageEventArgs args)
         {
             var message = args.Message;
             var body = Encoding.UTF8.GetString(message.Body);
@@ -69,22 +69,10 @@ namespace Mango.Services.Email.Messaging
                 await _emailRepo.SendAndLogEmail(objMessage);
                 await args.CompleteMessageAsync(args.Message);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw;
             }
-
-        }
-
-        private async Task OnOrderPaymentUpdateReceived(ProcessMessageEventArgs args)
-        {
-            var message = args.Message;
-            var body = Encoding.UTF8.GetString(message.Body);
-
-            UpdatePaymentResultMessage paymentResultMessage = JsonConvert.DeserializeObject<UpdatePaymentResultMessage>(body);
-
-            await _orderRepository.UpdateOrderPaymentStatus(paymentResultMessage.OrderId, paymentResultMessage.Status);
-            await args.CompleteMessageAsync(args.Message);
 
         }
     }

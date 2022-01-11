@@ -46,7 +46,7 @@ namespace Mango.Services.CouponAPI
                 .AddJwtBearer("Bearer", options =>
                 {
 
-                    options.Authority = "https://localhost:44365/";
+                    options.Authority = "https://localhost:7078/";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false
